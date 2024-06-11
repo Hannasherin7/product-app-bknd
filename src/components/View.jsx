@@ -1,15 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Nav } from './Nav'
+import axios from 'axios'
 
 export const View = () => {
-    const [data,changeData]=useState([
-        {
-            "pname":"qwwe",
-            "pid":123,
-            "pbrand":"sdfg",
-            "price":12345
+  const [data,changeData]=useState([])
+  const fetchData=()=>{
+    axios.get("http://localhost:8082/view").then(
+        (response)=>{
+            changeData(response.data)
         }
-    ])
+    ).catch(
+      (error)=>{
+        console.log(error.message)
+        alert(error.map)
+      }
+    ).finally()
+}
+useEffect(()=>{fetchData()},[])
   return (
     <div>
          <h1><center>View All EMPLOYEE Details</center></h1>
